@@ -1,0 +1,106 @@
+<!--{template common/header}-->
+
+<!--{eval $loginhash = 'L'.random(4);}-->
+<!--{if empty($_GET['infloat'])}-->
+<div id="ct" class="ptm wp w cl">
+	<div class="nfl" id="main_succeed" style="display: none">
+		<div class="f_c altw">
+			<div class="alert_right">
+				<p id="succeedmessage"></p>
+				<p id="succeedlocation" class="alert_btnleft"></p>
+				<p class="alert_btnleft"><a id="succeedmessage_href">{lang message_forward}</a></p>
+			</div>
+		</div>
+	</div>
+	<div class="mn" id="main_message">
+		<div class="bm">
+			<div class="bm_h bbs">
+				<span class="y">
+					<!--{hook/logging_side_top}-->
+					<a href="member.php?mod={$_G[setting][regname]}" class="xi2">{lang login_guest}</a>
+				</span>
+				<!--{if !$secchecklogin2}-->
+					<h3 class="xs2">{lang login}</h3>
+				<!--{else}-->
+					<h3 class="xs2">{lang login_seccheck2}</h3>
+				<!--{/if}-->
+			</div>
+		<div>
+<!--{/if}-->
+
+<div id="main_messaqge_$loginhash"{if $auth} style="width: auto"{/if}>
+	<div id="layer_login_$loginhash">
+		<h3 class="flb">
+			<em id="returnmessage_$loginhash">
+				<!--{if !empty($_GET['infloat'])}--><!--{if !empty($_GET['guestmessage'])}-->{lang login_guestmessage}<!--{elseif $auth}-->{lang profile_renew}<!--{else}-->{lang login_member}<!--{/if}--><!--{/if}-->
+			</em>
+			<span><!--{if !empty($_GET['infloat']) && !isset($_GET['frommessage'])}--><a href="javascript:;" class="flbc" onclick="hideWindow('$_GET[handlekey]', 0, 1);" title="{lang close}">{lang close}</a><!--{/if}--></span>
+		</h3>
+		<!--{hook/logging_top}-->
+        <div class="y pns">
+            <a href="https://login.dangdang.com/signin.aspx?returnurl=http://e.dangdang:8088/bbs/member.php" target="_blank">登录</a>
+            <a href="https://login.dangdang.com/lostpassword.php" target="_blank">找回密码</a>
+            <a href="https://login.dangdang.com/register.php" target="_blank">立即注册</a>
+        </div>
+	</div>
+	<!--{if $_G['setting']['pwdsafety']}-->
+		<script type="text/javascript" src="{$_G['setting']['jspath']}md5.js?{VERHASH}" reload="1"></script>
+	<!--{/if}-->
+
+</div>
+
+<div id="layer_message_$loginhash"{if empty($_GET['infloat'])} class="f_c blr nfl"{/if} style="display: none;">
+	<h3 class="flb" id="layer_header_$loginhash">
+		<!--{if !empty($_GET['infloat']) && !isset($_GET['frommessage'])}-->
+		<em>{lang login_member}</em>
+		<span><a href="javascript:;" class="flbc" onclick="hideWindow('login')" title="{lang close}">{lang close}</a></span>
+		<!--{/if}-->
+	</h3>
+	<div class="c"><div class="alert_right">
+		<div id="messageleft_$loginhash"></div>
+		<p class="alert_btnleft" id="messageright_$loginhash"></p>
+	</div>
+</div>
+
+<script type="text/javascript" reload="1">
+<!--{if !isset($_GET['viewlostpw'])}-->
+	var pwdclear = 0;
+	function initinput_login() {
+		document.body.focus();
+		<!--{if !$auth}-->
+			if($('loginform_$loginhash')) {
+				$('loginform_$loginhash').username.focus();
+			}
+			<!--{if !$this->setting['autoidselect']}-->
+				simulateSelect('loginfield_$loginhash');
+			<!--{/if}-->
+		<!--{elseif $seccodecheck && !(empty($_GET['auth']) || $questionexist)}-->
+			if($('loginform_$loginhash')) {
+				safescript('seccodefocus', function() {$('loginform_$loginhash').seccodeverify.focus()}, 500, 10);
+			}			
+		<!--{/if}-->
+	}
+	initinput_login();
+	<!--{if $this->setting['sitemessage']['login']}-->
+	showPrompt('custominfo_login_$loginhash', 'mouseover', '<!--{echo trim($this->setting['sitemessage'][login][array_rand($this->setting['sitemessage'][login])])}-->', $this->setting['sitemessage'][time]);
+	<!--{/if}-->
+
+	function clearpwd() {
+		if(pwdclear) {
+			$('password3_$loginhash').value = '';
+		}
+		pwdclear = 0;
+	}
+<!--{else}-->
+	display('layer_login_$loginhash');
+	display('layer_lostpw_$loginhash');
+	$('lostpw_email').focus();
+<!--{/if}-->
+</script>
+
+<!--{eval updatesession();}-->
+<!--{if empty($_GET['infloat'])}-->
+	</div></div></div></div>
+</div>
+<!--{/if}-->
+<!--{template common/footer}-->

@@ -1,0 +1,14 @@
+<!--{if CURMODULE != 'logging'}-->
+	<script type="text/javascript" src="{$_G[setting][jspath]}logging.js?{VERHASH}"></script>
+
+    <div class="y pns">
+        <a href="https://login.dangdang.com/signin.aspx?returnurl=http://e.dangdang:8088/bbs/member.php" target="_blank">登录</a>
+        <a href="https://login.dangdang.com/lostpassword.php" target="_blank">找回密码</a>
+        <a href="https://login.dangdang.com/register.php" target="_blank">立即注册</a>
+    </div>
+
+	<!--{if $_G['setting']['pwdsafety']}-->
+		<script type="text/javascript" src="{$_G['setting']['jspath']}md5.js?{VERHASH}" reload="1"></script>
+	<!--{/if}-->
+
+<!--{/if}-->
